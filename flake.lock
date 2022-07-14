@@ -1,0 +1,77 @@
+{
+  "nodes": {
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1650374568,
+        "narHash": "sha256-Z+s0J8/r907g149rllvwhb4pKi8Wam5ij0st8PwAh+E=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "b4a34015c698c7793d592d66adbab377907a2be8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "locked": {
+        "lastModified": 1656928814,
+        "narHash": "sha256-RIFfgBuKz6Hp89yRr7+NR5tzIAbn52h8vT6vXkYjZoM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "7e2a3b3dfd9af950a856d66b0a7d01e3c18aa249",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1657765843,
+        "narHash": "sha256-JQr7PTZdmFf670n9ZujrA6yCmTlTHDGiZgo67/0+bxg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "8eb14e7e79d6c34a9cce146182bfc8c820d527c2",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
+    "reflex-platform": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1657313364,
+        "narHash": "sha256-P3WumKV9wVA/k5Fg7SuGbkoAWSFfU5j1AM2VRWmA7lk=",
+        "owner": "reflex-frp",
+        "repo": "reflex-platform",
+        "rev": "661eed4aa86ed0506cc5abc7cb9ecf18724d6fe0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "reflex-frp",
+        "ref": "develop",
+        "repo": "reflex-platform",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs",
+        "reflex-platform": "reflex-platform"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
