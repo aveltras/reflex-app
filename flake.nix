@@ -14,19 +14,26 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         reflexPlatform = import reflex-platform { inherit system; __useNewerCompiler = true; };
-        project = reflexPlatform.project
-          ({ pkgs, ... }: {
-
-            packages = { };
-
-            shells = {
-              ghc = [ ];
-              ghcjs = [ ];
-            };
-
-          });
+        pkgs = nixpkgs.legacyPackages."${system}".appendOverlays [
+          self.overlay."${system}"
+        ];
       in
       {
-        devShell = project.shells.ghc;
+        overlay = final: prev: {
+          ghc = reflexPlatform.ghc.override {
+            overrides = hfinal: hprev: {
+              backend = hprev.callCabal2nix "backend" ./backend { };
+            };
+          };
+          ghcjs = reflexPlatform.ghcjs;
+        };
+
+        devShell = pkgs.ghc.shellFor {
+          packages = p: [ p.backend ];
+          buildInputs = [
+            pkgs.ghcjs.ghc
+            pkgs.ghc.ghc
+          ];
+        };
       });
 }
