@@ -1,0 +1,24 @@
+name: server
+version: 0.1.0
+
+dependencies:
+  - aeson
+  - aeson-gadt-th
+  - base
+  - binary
+  - bytestring
+  - hasql
+  - hasql-notifications
+  - http-types
+  - lens
+  - reflex
+  - reflex-dom
+  - reflex-gadt-api
+  - time
+  - wai
+  - wai-cors
+  - wai-extra
+  - warp
+
+library:
+  source-dirs: src

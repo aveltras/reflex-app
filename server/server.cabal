@@ -1,0 +1,36 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.34.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           server
+version:        0.1.0
+build-type:     Simple
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_server
+  hs-source-dirs:
+      src
+  build-depends:
+      aeson
+    , aeson-gadt-th
+    , base
+    , binary
+    , bytestring
+    , hasql
+    , hasql-notifications
+    , http-types
+    , lens
+    , reflex
+    , reflex-dom
+    , reflex-gadt-api
+    , time
+    , wai
+    , wai-cors
+    , wai-extra
+    , warp
+  default-language: Haskell2010

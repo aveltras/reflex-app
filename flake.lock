@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "aeson-gadt-th": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1641339206,
+        "narHash": "sha256-oCxY/okYhOnEPG9xiD7mSOqzwpyKvkWo1q6DF4ECVOo=",
+        "owner": "obsidiansystems",
+        "repo": "aeson-gadt-th",
+        "rev": "71a315a4873c2875ad737a3320320849bdcf8a2a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "obsidiansystems",
+        "ref": "develop",
+        "repo": "aeson-gadt-th",
+        "type": "github"
+      }
+    },
     "flake-compat": {
       "flake": false,
       "locked": {
@@ -46,6 +63,23 @@
         "type": "indirect"
       }
     },
+    "reflex-gadt-api": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1646047538,
+        "narHash": "sha256-YY7gv3wiazespo9nxG63KI9xXdOfSsNAyZjMcjZSkSo=",
+        "owner": "mgttlinger",
+        "repo": "reflex-gadt-api",
+        "rev": "a09ac7a8d7cddbd46797d671e9bb666b8db6e6fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mgttlinger",
+        "ref": "develop",
+        "repo": "reflex-gadt-api",
+        "type": "github"
+      }
+    },
     "reflex-platform": {
       "flake": false,
       "locked": {
@@ -65,9 +99,11 @@
     },
     "root": {
       "inputs": {
+        "aeson-gadt-th": "aeson-gadt-th",
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
+        "reflex-gadt-api": "reflex-gadt-api",
         "reflex-platform": "reflex-platform"
       }
     }
