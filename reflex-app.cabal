@@ -15,6 +15,7 @@ library
     , base
     , binary
     , bytestring
+    , ghcjs-dom
     , hasql
     , hasql-notifications
     , http-types
@@ -24,6 +25,7 @@ library
     , reflex
     , reflex-dom-core
     , reflex-gadt-api
+    , text
     , time
     , wai
     , wai-cors

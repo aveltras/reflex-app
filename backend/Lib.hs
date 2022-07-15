@@ -1,4 +1,6 @@
+{-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE TypeApplications #-}
 
 module Lib where
@@ -7,15 +9,28 @@ import Control.Concurrent (Chan, forkIO, newChan, threadDelay, writeChan)
 import Control.Lens (view)
 import Control.Monad (void)
 import Control.Monad.Fix (MonadFix)
+import Control.Monad.IO.Class
+import Data.Aeson
+import Data.Aeson qualified as Aeson
+import Data.Aeson.Types qualified as Aeson
 import Data.Binary.Builder (fromByteString)
 import Data.ByteString.Builder
-import qualified Data.ByteString.Lazy.Char8 as LBS
+import Data.ByteString.Lazy.Char8 qualified as LBS
 import Data.Functor ((<&>))
-import Data.Maybe (fromJust)
+import Data.Maybe (fromJust, fromMaybe)
+import Data.Text qualified as T
 import Data.Time.Clock.POSIX (getPOSIXTime)
+import GHCJS.DOM qualified as DOM
+import GHCJS.DOM.EventM qualified as DOM
+import GHCJS.DOM.EventSource qualified as DOM
+import GHCJS.DOM.MessageEvent qualified as DOM
+import GHCJS.DOM.Types qualified as DOM
+import GHCJS.DOM.Window (alert)
 import Hasql.Connection
 import Hasql.Notifications
-import Language.Javascript.JSaddle (JSM)
+import Language.Javascript.JSaddle (JSM, textToJSString, valToJSON, valToText)
+import Language.Javascript.JSaddle.Monad (liftJSM)
+import Language.Javascript.JSaddle.Object (function)
 import Language.Javascript.JSaddle.Run (syncPoint)
 import Language.Javascript.JSaddle.WebSockets
 import Network.HTTP.Types
@@ -38,7 +53,7 @@ headWidget = do
   prerender_ (elAttr "script" ("src" =: "http://localhost:8080/jsaddle.js") blank) blank
   elAttr "link" ("rel" =: "shortcut icon" <> "href" =: "data:image/x-icon;," <> "type" =: "image/x-icon") blank
 
-bodyWidget :: (DomBuilder t m, PostBuild t m, MonadHold t m, MonadFix m, Prerender t m) => m ()
+bodyWidget :: (DomBuilder t m, PostBuild t m, MonadHold t m, MonadFix m, Prerender t m, TriggerEvent t m) => m ()
 bodyWidget = do
   prerender_ (el "div" $ text "loading...") $ do
     onBuild <- getPostBuild
@@ -48,6 +63,23 @@ bodyWidget = do
   display =<< count =<< button "ClickMe"
   -- v <- holdDyn 0 $ 1 <$ onClick
   -- el "div" $ dynText "tac"
+  (onMessage, sendMessage) <- newTriggerEvent
+  display =<< holdDyn (mempty :: Aeson.Object) (traceEvent "onMessage" $ onMessage)
+  prerender_ (text "sse here") $
+    liftJSM $ do
+      w <- DOM.currentWindowUnchecked
+      -- alert w ("prerender" :: String)
+      eventSource <- DOM.newEventSource (DOM.toJSString ("http://localhost:8080/sse" :: String)) DOM.noEventSourceInit
+      onMessage <- function $ \_ _ (e : _) -> do
+        let e' = DOM.MessageEvent e
+        msg <- DOM.getData e'
+        -- msg' <- DOM.unMessageEvent <$> DOM.fromJSValUnchecked msg
+        -- jsonString <- valToJSON msg'
+        -- alert w jsonString
+        val <- DOM.fromJSValUnchecked msg
+        liftIO $ sendMessage $ fromMaybe mempty $ jsonDecode val
+      DOM.addListener eventSource DOM.message (DOM.SaferEventListener onMessage) True
+      blank
   blank
   where
     req = XhrRequest "GET" "http://localhost:8080/api" def
