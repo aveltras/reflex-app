@@ -27,7 +27,7 @@
           ghc = reflexPlatform.ghc.override {
             overrides = hfinal: hprev: with final.haskell.lib; {
               aeson-gadt-th = hprev.callCabal2nix "aeson-gadt-th" inputs.aeson-gadt-th { };
-              server = hprev.callCabal2nix "server" ./server { };
+              reflex-app = hprev.callCabal2nix "reflex-app" ./. { };
               reflex-dom = addBuildDepend (enableCabalFlag hprev.reflex-dom "use-warp") hfinal.jsaddle-warp;
               reflex-gadt-api = doJailbreak (hprev.callCabal2nix "reflex-gadt-api" inputs.reflex-gadt-api { });
             };
@@ -36,7 +36,7 @@
         };
 
         devShell = pkgs.ghc.shellFor {
-          packages = p: [ p.server ];
+          packages = p: [ p.reflex-app ];
           buildInputs = [
             pkgs.cabal-install
             pkgs.dbmate

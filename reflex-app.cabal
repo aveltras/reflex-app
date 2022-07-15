@@ -1,20 +1,14 @@
 cabal-version: 1.12
-
--- This file has been generated from package.yaml by hpack version 0.34.2.
---
--- see: https://github.com/sol/hpack
-
-name:           server
-version:        0.1.0
-build-type:     Simple
+name: reflex-app
+version: 0.1.0
+build-type: Simple
 
 library
+  default-language: Haskell2010
   exposed-modules:
       Lib
-  other-modules:
-      Paths_server
   hs-source-dirs:
-      src
+      backend
   build-depends:
       aeson
     , aeson-gadt-th
@@ -33,4 +27,3 @@ library
     , wai-cors
     , wai-extra
     , warp
-  default-language: Haskell2010
