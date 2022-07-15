@@ -18,12 +18,15 @@ library
     , hasql
     , hasql-notifications
     , http-types
+    , jsaddle
+    , jsaddle-warp
     , lens
     , reflex
-    , reflex-dom
+    , reflex-dom-core
     , reflex-gadt-api
     , time
     , wai
     , wai-cors
     , wai-extra
     , warp
+    , websockets
